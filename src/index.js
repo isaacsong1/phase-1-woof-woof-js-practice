@@ -9,13 +9,16 @@ let dogStatus;
 const appendDog = dog => {
     const span = document.createElement('span');
     span.textContent = dog.name;
-    span.addEventListener('click', () => displayDogInfo(dog))
-
+    span.addEventListener('click', () => {
+        fetch(`${DOGSURL}/${dog.id}`)
+        .then(resp => resp.json())
+        .then(newDog => displayDogInfo(newDog))
+    })
     nav.append(span);
-
 }   
 
 const displayDogInfo = dog => {
+    fetchDogStatus(dog);
     const image = document.createElement('img');
     image.src = dog.image;
     image.alt = dog.name;
@@ -29,6 +32,14 @@ const displayDogInfo = dog => {
         dogInfo.removeChild(dogInfo.lastChild);
     }
     dogInfo.append(image, h2, btn);
+}
+
+const fetchDogStatus = dog => {
+    fetch(`${DOGSURL}/${dog.id}`)
+    .then(resp => resp.json())
+    .then(() => {
+        debugger;
+    })
 }
 
 const updateDogStatus = dog => {
