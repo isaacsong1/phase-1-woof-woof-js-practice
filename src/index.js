@@ -3,9 +3,11 @@ const DOGSURL = 'http://localhost:3000/pups';
 
 const nav = document.querySelector('#dog-bar');
 const dogInfo = document.querySelector('#dog-info');
-let dogStatus;
+// const filterBtn = document.querySelector('#good-dog-filter');
+// filterBtn.addEventListener('click', filterGoodDogs);
 
 //! HELPERS
+// Creates the nav-bar filled with dog name buttons
 const appendDog = dog => {
     const span = document.createElement('span');
     span.textContent = dog.name;
@@ -17,8 +19,8 @@ const appendDog = dog => {
     nav.append(span);
 }   
 
+// Displays Dog information when name button is pressed
 const displayDogInfo = dog => {
-    fetchDogStatus(dog);
     const image = document.createElement('img');
     image.src = dog.image;
     image.alt = dog.name;
@@ -34,14 +36,7 @@ const displayDogInfo = dog => {
     dogInfo.append(image, h2, btn);
 }
 
-const fetchDogStatus = dog => {
-    fetch(`${DOGSURL}/${dog.id}`)
-    .then(resp => resp.json())
-    .then(() => {
-        debugger;
-    })
-}
-
+// Updates isDogGood in db.json after pressing like button
 const updateDogStatus = dog => {
     fetch(`${DOGSURL}/${dog.id}`, {
         method: 'PATCH',
